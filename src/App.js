@@ -1,5 +1,68 @@
+import { NuvoImporter as NuvoImporterBase } from 'nuvo-react';
+
 import logo from './logo.svg';
 import './App.css';
+
+async function validateRow(row) {
+  return row.customer_code === 'invalid'
+    ? Promise.resolve({ customer_code: { info: [{ message: 'This code is invalid', level: 'error' }] } })
+    : Promise.resolve({});
+}
+
+const NuvoImporter = () => {
+  return <NuvoImporterBase
+      licenseKey="Enter license key here"
+      onResults={async (result, identifier) => {
+        // upload file...
+      }}
+      settings={{
+        // requires the Pro plan
+        multipleFileUpload: false,
+        modal: false,
+        disableSuccessModal: true,
+        developerMode: true,
+        identifier: 'human-resources',
+        columns: [
+          {
+            label: "Customer Code",
+            key: "customer_code",
+          },
+          {
+            label: "Customer Name",
+            key: "customer_name",
+          },
+          {
+            label: "Domain Name",
+            key: "domain_name",
+          },
+          {
+            label: "Region",
+            key: "region",
+          },
+          {
+            label: "Deal Size",
+            key: "deal_size",
+          },
+          {
+            label: "Address",
+            key: "address",
+          },
+          {
+            label: "Deal Stage",
+            key: "deal_stage",
+          },
+          {
+            label: "Pipeline",
+            key: "pipeline",
+          },
+        ],
+      }}
+      onEntryInit={validateRow}
+      onEntryChange={validateRow}
+  >
+    {'Select file'}
+  </NuvoImporterBase>;
+};
 
 function App() {
   return (
@@ -9,14 +72,7 @@ function App() {
         <p>
           Edit <code>src/App.js</code> and save to reload.
         </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+        <NuvoImporter />
       </header>
     </div>
   );
