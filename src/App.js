@@ -26,6 +26,12 @@ const NuvoImporter = () => {
           {
             label: "Customer Code",
             key: "customer_code",
+            columnType: "category",
+            dropdownOptions: [
+              { value: "foo", label: "Option 1", type: "string", alternativeMatches: ["foo"] },
+              { value: "bar", label: "Option 2", type: "string" },
+              { value: "baz", label: "Option 3", type: "string" },
+            ]
           },
           {
             label: "Customer Name",
